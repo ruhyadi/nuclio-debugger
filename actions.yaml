@@ -1,0 +1,25 @@
+name: 'nuclio-model-deployment'
+description: 'Model Deployment with Nuclio'
+inputs:
+  model-dir:  # id of input
+    description: 'function.yaml and main.py dir'
+    required: true
+    default: './'
+outputs:
+  logs:
+    description: "Model Deployment logs"
+    value: ${{ steps.deploy-model }}
+runs:
+  using: "composite"
+  steps:
+    - name: "Deploy Model" 
+      id: deploy-model 
+      run: ./deploy.sh ${{ inputs.model-dir }}
+
+    # - id: random-number-generator
+    #   run: echo "::set-output name=random-number::$(echo $RANDOM)"
+    #   shell: bash
+    # - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+    #   shell: bash          
+    # - run: goodbye.sh
+    #   shell: bash

@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  MODEL_NAME: ultralytics-yolov5
+  CONTAINER_NAME: cvat/ultralytics-yolov5
 
 jobs:
   nuclio-container:
@@ -40,7 +40,7 @@ jobs:
         run: ./deploy.sh ./yolov5
 
       - name: Test Model
-        run: docker logs ${{ env.MODEL_NAME }}
+        run: docker logs ${{ env.CONTAINER_NAME }}
         
       # - name: Test Model
       #   run: |

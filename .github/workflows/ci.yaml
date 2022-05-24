@@ -9,6 +9,7 @@ on:
 jobs:
   nuclio-container:
     name: Nulcio Container
+    runs-on: ubuntu-latest
     container:
       image: quay.io/nuclio/dashboard:1.5.16-amd64
       volumes:

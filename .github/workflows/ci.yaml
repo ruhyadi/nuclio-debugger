@@ -39,8 +39,11 @@ jobs:
       - name: Deploy Model
         run: ./deploy.sh ./yolov5
 
-      - name: Test Model
-        run: docker logs ${{ env.CONTAINER_NAME }}
+      - name: Dump docker logs on failure
+        uses: jwalton/gh-docker-logs@v1
+
+      # - name: Test Model
+      #   run: docker logs ${{ env.CONTAINER_NAME }}
         
       # - name: Test Model
       #   run: |

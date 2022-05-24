@@ -6,9 +6,6 @@ on:
   push:
     branches: [ main ]
 
-env:
-  CONTAINER_NAME: cvat/ultralytics-yolov5
-
 jobs:
   nuclio-container:
     name: Nulcio Container
@@ -36,11 +33,21 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3 
 
+      - name: Get deploy.sh
+        uses: wei/wget@v1
+        with:
+          args: -O deploy.sh https://github.com/ruhyadi/nuclio-debugger/releases/download/v1.0/deploy.sh
+
+      - name: Get nuctl
+        uses: wei/wget@v1
+        with:
+          args: -O nuctl https://github.com/ruhyadi/nuclio-debugger/releases/download/v1.0/deploy.sh
+
       - name: Deploy Model
         run: ./deploy.sh ./yolov5
 
-      - name: Dump docker logs on failure
-        uses: jwalton/gh-docker-logs@v1
+      - name: Model Logs
+        uses: jwalton/gh-docker-logs@v2
 
       # - name: Test Model
       #   run: docker logs ${{ env.CONTAINER_NAME }}

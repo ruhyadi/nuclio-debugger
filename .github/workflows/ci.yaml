@@ -33,8 +33,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3 
 
-      - run: apt-get install wget
-      - run: wget https://github.com/nuclio/nuclio/releases/download/1.5.16/nuctl-1.5.16-linux-amd64 ./nuctl
+      - name: Download Nuclio CLI
+        uses: wei/wget@v1
+        with:
+          args: -O nuctl https://github.com/nuclio/nuclio/releases/download/1.5.16/nuctl-1.5.16-linux-amd64
       
       - name: Deploy Model
         run: ./deploy.sh ./yolov5

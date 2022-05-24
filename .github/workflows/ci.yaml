@@ -6,6 +6,9 @@ on:
   push:
     branches: [ main ]
 
+env:
+  MODEL_NAME: ultralytics-yolov5
+
 jobs:
   nuclio-container:
     name: Nulcio Container
@@ -35,5 +38,13 @@ jobs:
 
       - name: Deploy Model
         run: ./deploy.sh ./yolov5
+
+      - name: Test Model
+        run: |
+          image=$(curl https://upload.wikimedia.org/wikipedia/en/7/7d/Lenna_%28test_image%29.png --output - | base64 | tr -d '\n')
+          cat << EOF > /tmp/input.json
+          {"image": "$image"}
+          EOF
+          cat /tmp/input.json | ./nuctl invoke ${{ env.MODEL_NAME }} -c 'application/json'
 
 
